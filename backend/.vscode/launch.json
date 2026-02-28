@@ -5,7 +5,9 @@
       "type": "node",
       "request": "launch",
       "name": "Debug NodeJS backend project",
-      "skipFiles": ["<node_internals>/**"],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
       "program": "${workspaceFolder}\\backend\\app.js"
     }
   ]
