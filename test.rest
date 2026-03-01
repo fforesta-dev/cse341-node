@@ -1,11 +1,23 @@
-### Test Hello World
+### LOCALHOST - Test Hello World
 GET http://localhost:3000/ HTTP/1.1
 
-### Get all contacts
+### PRODUCTION - Test Hello World
+GET https://cse341-node-2r48.onrender.com/ HTTP/1.1
+
+### LOCALHOST - Get all contacts
 GET http://localhost:3000/contacts HTTP/1.1
 
-### Get contact by ID
+### PRODUCTION - Get all contacts
+GET https://cse341-node-2r48.onrender.com/contacts HTTP/1.1
+
+### LOCALHOST - Get contact by ID
 GET http://localhost:3000/contacts/69a4764fd6d06f9605903c4e HTTP/1.1
 
-### Get contact by query parameter ID
+### PRODUCTION - Get contact by ID
+GET https://cse341-node-2r48.onrender.com/contacts/69a4764fd6d06f9605903c4e HTTP/1.1
+
+### LOCALHOST - Get contact by query parameter ID
 GET http://localhost:3000/contacts/query/by-id?id=69a4764fd6d06f9605903c4e HTTP/1.1
+
+### PRODUCTION - Get contact by query parameter ID
+GET https://cse341-node-2r48.onrender.com/contacts/query/by-id?id=69a4764fd6d06f9605903c4e HTTP/1.1
