@@ -23,10 +23,10 @@
   "dependencies": {
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "mongodb": "^7.1.0",
     "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
-    "swagger-autogen": "^2.23.7",
-    "mongodb": "^7.1.0"
+    "swagger-autogen": "^2.23.7"
   }
 }
