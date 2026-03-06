@@ -136,10 +136,6 @@ DELETE http://localhost:3000/contacts/507f1f77bcf86cd799439011 HTTP/1.1
 ### PRODUCTION - Delete a contact
 DELETE https://cse341-node-2r48.onrender.com/contacts/69a4764fd6d06f9605903c4e HTTP/1.1
 
-###
-### SWAGGER DOCUMENTATION ROUTES
-###
-
 ### LOCALHOST - Swagger UI (Interactive Documentation)
 GET http://localhost:3000/api-docs/ HTTP/1.1
 
