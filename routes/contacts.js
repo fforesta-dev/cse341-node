@@ -88,22 +88,20 @@ router.get('/:id', async (req, res) => {
  * POST /contacts
  * @summary Create a new contact
  * @description Create a new contact with required fields. Returns the new contact ID and full contact object
- * @body {NewContact} required - Contact data (firstName, lastName, email, phone are required)
+ * @body {NewContact} required - Contact data (firstName, lastName, email, favoriteColor, birthday are required)
  * @responses 201 - Contact created successfully with ID and full object
  * @responses 400 - Missing required fields
  * @responses 500 - Internal server error
  */
 router.post('/', async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, address, city, state, zipCode } = req.body;
+    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
 
     // Validate all required fields
-    if (!firstName || !lastName || !email || !phone) {
-      return res
-        .status(400)
-        .json({
-          error: 'Missing required fields: firstName, lastName, email, and phone are required',
-        });
+    if (!firstName || !lastName || !email || !favoriteColor || !birthday) {
+      return res.status(400).json({
+        error: 'Missing required fields: firstName, lastName, email, favoriteColor, and birthday are required',
+      });
     }
 
     const db = getDb();
@@ -111,11 +109,8 @@ router.post('/', async (req, res) => {
       firstName,
       lastName,
       email,
-      phone,
-      address: address || '',
-      city: city || '',
-      state: state || '',
-      zipCode: zipCode || '',
+      favoriteColor,
+      birthday,
     };
 
     const result = await db.collection('contacts').insertOne(newContact);
@@ -150,10 +145,10 @@ router.put('/:id', async (req, res) => {
       return res.status(400).json({ error: 'Invalid contact id' });
     }
 
-    const { firstName, lastName, email, phone, address, city, state, zipCode } = req.body;
+    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
 
     // Validate that at least some fields are provided
-    if (!firstName && !lastName && !email && !phone && !address && !city && !state && !zipCode) {
+    if (!firstName && !lastName && !email && !favoriteColor && !birthday) {
       return res.status(400).json({ error: 'At least one field is required to update' });
     }
 
@@ -162,11 +157,8 @@ router.put('/:id', async (req, res) => {
     if (firstName) updateFields.firstName = firstName;
     if (lastName) updateFields.lastName = lastName;
     if (email) updateFields.email = email;
-    if (phone) updateFields.phone = phone;
-    if (address !== undefined) updateFields.address = address;
-    if (city !== undefined) updateFields.city = city;
-    if (state !== undefined) updateFields.state = state;
-    if (zipCode !== undefined) updateFields.zipCode = zipCode;
+    if (favoriteColor) updateFields.favoriteColor = favoriteColor;
+    if (birthday) updateFields.birthday = birthday;
 
     const result = await db
       .collection('contacts')

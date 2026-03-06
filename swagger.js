@@ -35,33 +35,18 @@ const doc = {
           example: 'john.doe@example.com',
           description: 'Email address of the contact (required)',
         },
-        phone: {
+        favoriteColor: {
           type: 'string',
-          example: '801-555-1234',
-          description: 'Phone number of the contact (required)',
+          example: 'Blue',
+          description: 'Favorite color of the contact (required)',
         },
-        address: {
+        birthday: {
           type: 'string',
-          example: '123 Main Street',
-          description: 'Street address (optional)',
-        },
-        city: {
-          type: 'string',
-          example: 'Provo',
-          description: 'City name (optional)',
-        },
-        state: {
-          type: 'string',
-          example: 'UT',
-          description: 'State abbreviation (optional)',
-        },
-        zipCode: {
-          type: 'string',
-          example: '84604',
-          description: 'Zip code (optional)',
+          example: '1990-05-15',
+          description: 'Birthday of the contact in YYYY-MM-DD format (required)',
         },
       },
-      required: ['firstName', 'lastName', 'email', 'phone'],
+      required: ['firstName', 'lastName', 'email', 'favoriteColor', 'birthday'],
     },
     NewContact: {
       type: 'object',
@@ -78,28 +63,16 @@ const doc = {
           type: 'string',
           example: 'john.doe@example.com',
         },
-        phone: {
+        favoriteColor: {
           type: 'string',
-          example: '801-555-1234',
+          example: 'Blue',
         },
-        address: {
+        birthday: {
           type: 'string',
-          example: '123 Main Street',
-        },
-        city: {
-          type: 'string',
-          example: 'Provo',
-        },
-        state: {
-          type: 'string',
-          example: 'UT',
-        },
-        zipCode: {
-          type: 'string',
-          example: '84604',
+          example: '1990-05-15',
         },
       },
-      required: ['firstName', 'lastName', 'email', 'phone'],
+      required: ['firstName', 'lastName', 'email', 'favoriteColor', 'birthday'],
     },
     Error: {
       type: 'object',

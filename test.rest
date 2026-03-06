@@ -30,11 +30,8 @@ Content-Type: application/json
   "firstName": "John",
   "lastName": "Doe",
   "email": "john.doe@example.com",
-  "phone": "801-555-1234",
-  "address": "123 Main Street",
-  "city": "Provo",
-  "state": "UT",
-  "zipCode": "84604"
+  "favoriteColor": "Blue",
+  "birthday": "1990-05-15"
 }
 
 ### PRODUCTION - Create a new contact
@@ -45,11 +42,8 @@ Content-Type: application/json
   "firstName": "Jane",
   "lastName": "Smith",
   "email": "jane.smith@example.com",
-  "phone": "801-555-5678",
-  "address": "456 Oak Avenue",
-  "city": "Salt Lake City",
-  "state": "UT",
-  "zipCode": "84101"
+  "favoriteColor": "Green",
+  "birthday": "1992-08-22"
 }
 
 ### LOCALHOST - Create contact with missing required field (missing email)
@@ -59,7 +53,7 @@ Content-Type: application/json
 {
   "firstName": "Bob",
   "lastName": "Johnson",
-  "phone": "801-555-9999"
+  "favoriteColor": "Red"
 }
 
 ### LOCALHOST - Create contact with missing multiple required fields
@@ -78,7 +72,7 @@ Content-Type: application/json
 {
   "firstName": "Jonathan",
   "email": "jonathan.doe@example.com",
-  "phone": "801-555-1111"
+  "favoriteColor": "Purple"
 }
 
 ### LOCALHOST - Update only name field
@@ -89,15 +83,13 @@ Content-Type: application/json
   "firstName": "James"
 }
 
-### LOCALHOST - Update address fields
+### LOCALHOST - Update color and birthday
 PUT http://localhost:3000/contacts/69a4764fd6d06f9605903c4e HTTP/1.1
 Content-Type: application/json
 
 {
-  "address": "789 Elm Street",
-  "city": "Orem",
-  "state": "UT",
-  "zipCode": "84058"
+  "favoriteColor": "Orange",
+  "birthday": "1988-03-10"
 }
 
 ### LOCALHOST - Update with invalid ID format
@@ -129,7 +121,7 @@ Content-Type: application/json
 
 {
   "firstName": "UpdatedName",
-  "phone": "801-555-2222"
+  "favoriteColor": "Yellow"
 }
 
 ### LOCALHOST - Delete a contact (replace with valid ID from created contact)

@@ -58,19 +58,10 @@
                 "email": {
                   "example": "any"
                 },
-                "phone": {
+                "favoriteColor": {
                   "example": "any"
                 },
-                "address": {
-                  "example": "any"
-                },
-                "city": {
-                  "example": "any"
-                },
-                "state": {
-                  "example": "any"
-                },
-                "zipCode": {
+                "birthday": {
                   "example": "any"
                 }
               }
@@ -163,19 +154,10 @@
                 "email": {
                   "example": "any"
                 },
-                "phone": {
+                "favoriteColor": {
                   "example": "any"
                 },
-                "address": {
-                  "example": "any"
-                },
-                "city": {
-                  "example": "any"
-                },
-                "state": {
-                  "example": "any"
-                },
-                "zipCode": {
+                "birthday": {
                   "example": "any"
                 }
               }
@@ -303,7 +285,7 @@
                 }
               }
             },
-            "phone": {
+            "favoriteColor": {
               "type": "object",
               "properties": {
                 "type": {
@@ -312,15 +294,15 @@
                 },
                 "example": {
                   "type": "string",
-                  "example": "801-555-1234"
+                  "example": "Blue"
                 },
                 "description": {
                   "type": "string",
-                  "example": "Phone number of the contact (required)"
+                  "example": "Favorite color of the contact (required)"
                 }
               }
             },
-            "address": {
+            "birthday": {
               "type": "object",
               "properties": {
                 "type": {
@@ -329,62 +311,11 @@
                 },
                 "example": {
                   "type": "string",
-                  "example": "123 Main Street"
+                  "example": "1990-05-15"
                 },
                 "description": {
                   "type": "string",
-                  "example": "Street address (optional)"
-                }
-              }
-            },
-            "city": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "Provo"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "City name (optional)"
-                }
-              }
-            },
-            "state": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "UT"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "State abbreviation (optional)"
-                }
-              }
-            },
-            "zipCode": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "84604"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Zip code (optional)"
+                  "example": "Birthday of the contact in YYYY-MM-DD format (required)"
                 }
               }
             }
@@ -396,7 +327,8 @@
             "firstName",
             "lastName",
             "email",
-            "phone"
+            "favoriteColor",
+            "birthday"
           ],
           "items": {
             "type": "string"
@@ -453,7 +385,7 @@
                 }
               }
             },
-            "phone": {
+            "favoriteColor": {
               "type": "object",
               "properties": {
                 "type": {
@@ -462,11 +394,11 @@
                 },
                 "example": {
                   "type": "string",
-                  "example": "801-555-1234"
+                  "example": "Blue"
                 }
               }
             },
-            "address": {
+            "birthday": {
               "type": "object",
               "properties": {
                 "type": {
@@ -475,46 +407,7 @@
                 },
                 "example": {
                   "type": "string",
-                  "example": "123 Main Street"
-                }
-              }
-            },
-            "city": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "Provo"
-                }
-              }
-            },
-            "state": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "UT"
-                }
-              }
-            },
-            "zipCode": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "84604"
+                  "example": "1990-05-15"
                 }
               }
             }
@@ -526,7 +419,8 @@
             "firstName",
             "lastName",
             "email",
-            "phone"
+            "favoriteColor",
+            "birthday"
           ],
           "items": {
             "type": "string"

@@ -16,19 +16,19 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('Hello World');
+  res.send('Hello World');
 });
 
 app.use('/contacts', contactsRoutes);
 
 // Initialize database and start server
 initDb((err) => {
-    if (err) {
-        console.error('Failed to initialize database:', err);
-        process.exit(1);
-    }
+  if (err) {
+    console.error('Failed to initialize database:', err);
+    process.exit(1);
+  }
 
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
-    });
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
 });
