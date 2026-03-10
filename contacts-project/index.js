@@ -8,36 +8,32 @@ const swaggerDocument = require('./swagger.json');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(express.json());
 
 // Swagger UI
-app.get('/api-docs/swagger.json', (req, res) => {
-  const dynamicSwaggerDocument = {
-    ...swaggerDocument,
-    host: req.get('host'),
-    schemes: [req.protocol],
-  };
-
-  res.json(dynamicSwaggerDocument);
-});
-
 app.use(
   '/api-docs',
-  swaggerUi.serve,
-  swaggerUi.setup(null, {
-    explorer: true,
-    swaggerOptions: {
-      url: '/api-docs/swagger.json',
-    },
-  })
+  (req, res, next) => {
+    const host = req.get('host');
+    const forwardedProto = req.get('x-forwarded-proto');
+    const protocol = forwardedProto || req.protocol;
+    const scheme = host && host.includes('onrender.com') ? 'https' : protocol;
+
+    req.swaggerDoc = {
+      ...swaggerDocument,
+      host,
+      schemes: [scheme],
+    };
+    next();
+  },
+  swaggerUi.serveFiles(),
+  swaggerUi.setup()
 );
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
 app.use('/contacts', contactsRoutes);
 
 // Initialize database and start server

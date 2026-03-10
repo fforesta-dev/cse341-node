@@ -22,42 +22,6 @@ router.get('/', async (req, res) => {
 });
 
 /**
- * GET /contacts/query/by-id
- * @summary Get a contact by query parameter ID
- * @description Retrieve a specific contact using an ID provided as a query parameter
- * @param {string} id - Contact ID (query parameter)
- * @responses 200 - Contact object
- * @responses 400 - Missing or invalid ID
- * @responses 404 - Contact not found
- * @responses 500 - Internal server error
- */
-router.get('/query/by-id', async (req, res) => {
-  try {
-    const { id } = req.query;
-
-    if (!id) {
-      return res.status(400).json({ error: 'Missing required query parameter: id' });
-    }
-
-    if (!ObjectId.isValid(id)) {
-      return res.status(400).json({ error: 'Invalid contact id' });
-    }
-
-    const db = getDb();
-    const contact = await db.collection('contacts').findOne({ _id: new ObjectId(id) });
-
-    if (!contact) {
-      return res.status(404).json({ error: 'Contact not found' });
-    }
-
-    res.status(200).json(contact);
-  } catch (error) {
-    console.error('Error fetching contact by query id:', error);
-    res.status(500).json({ error: 'Failed to fetch contact' });
-  }
-});
-
-/**
  * GET /contacts/:id
  * @summary Get a contact by ID
  * @description Retrieve a specific contact by its MongoDB ID from the URL path
