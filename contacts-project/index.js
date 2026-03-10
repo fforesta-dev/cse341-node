@@ -12,7 +12,26 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 // Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.get('/api-docs/swagger.json', (req, res) => {
+  const dynamicSwaggerDocument = {
+    ...swaggerDocument,
+    host: req.get('host'),
+    schemes: [req.protocol],
+  };
+
+  res.json(dynamicSwaggerDocument);
+});
+
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(null, {
+    explorer: true,
+    swaggerOptions: {
+      url: '/api-docs/swagger.json',
+    },
+  })
+);
 
 // Routes
 app.get('/', (req, res) => {

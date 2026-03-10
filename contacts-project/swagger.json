@@ -18,6 +18,16 @@
     "application/json"
   ],
   "paths": {
+    "/api-docs/swagger.json": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "description": "",
