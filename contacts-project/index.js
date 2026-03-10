@@ -34,6 +34,10 @@ app.use(
 );
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
 app.use('/contacts', contactsRoutes);
 
 // Initialize database and start server
