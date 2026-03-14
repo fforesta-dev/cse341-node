@@ -10,10 +10,8 @@ const port = process.env.PORT || 3000;
 
 app.set('trust proxy', 1);
 
-// Middleware
 app.use(express.json());
 
-// Swagger UI
 app.use(
   '/api-docs',
   (req, res, next) => {
@@ -33,21 +31,19 @@ app.use(
   swaggerUi.setup()
 );
 
-// Routes
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
 app.use('/contacts', contactsRoutes);
 
-// Initialize database and start server
 initDb((err) => {
   if (err) {
-    console.error('Failed to initialize database:', err);
+    console.error('DB init error:', err);
     process.exit(1);
   }
 
   app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server running on ${port}`);
   });
 });

@@ -3,13 +3,6 @@ const router = express.Router();
 const { getDb } = require('../db/connect');
 const { ObjectId } = require('mongodb');
 
-/**
- * GET /contacts
- * @summary Get all contacts
- * @description Retrieve a list of all contacts from the database
- * @responses 200 - Array of all contacts
- * @responses 500 - Internal server error
- */
 router.get('/', async (req, res) => {
   try {
     const db = getDb();
@@ -17,19 +10,10 @@ router.get('/', async (req, res) => {
     res.status(200).json(contacts);
   } catch (error) {
     console.error('Error fetching contacts:', error);
-    res.status(500).json({ error: 'Failed to fetch contacts' });
+    res.status(500).json({ error: 'Could not get contacts' });
   }
 });
 
-/**
- * GET /contacts/:id
- * @summary Get a contact by ID
- * @description Retrieve a specific contact by its MongoDB ID from the URL path
- * @param {string} id - Contact ID (URL parameter)
- * @responses 200 - Contact object
- * @responses 404 - Contact not found
- * @responses 500 - Internal server error
- */
 router.get('/:id', async (req, res) => {
   try {
     const db = getDb();
@@ -44,19 +28,10 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(contact);
   } catch (error) {
     console.error('Error fetching contact:', error);
-    res.status(500).json({ error: 'Failed to fetch contact' });
+    res.status(500).json({ error: 'Could not get contact' });
   }
 });
 
-/**
- * POST /contacts
- * @summary Create a new contact
- * @description Create a new contact with required fields. Returns the new contact ID and full contact object
- * @body {NewContact} required - Contact data (firstName, lastName, email, favoriteColor, birthday are required)
- * @responses 201 - Contact created successfully with ID and full object
- * @responses 400 - Missing required fields
- * @responses 500 - Internal server error
- */
 router.post('/', async (req, res) => {
   try {
     const { firstName, lastName, email, favoriteColor, birthday } = req.body;
@@ -64,8 +39,7 @@ router.post('/', async (req, res) => {
     // Validate all required fields
     if (!firstName || !lastName || !email || !favoriteColor || !birthday) {
       return res.status(400).json({
-        error:
-          'Missing required fields: firstName, lastName, email, favoriteColor, and birthday are required',
+        error: 'Missing required fields',
       });
     }
 
@@ -81,27 +55,16 @@ router.post('/', async (req, res) => {
     const result = await db.collection('contacts').insertOne(newContact);
 
     res.status(201).json({
-      message: 'Contact created successfully',
+      message: 'Contact created',
       id: result.insertedId,
       contact: { ...newContact, _id: result.insertedId },
     });
   } catch (error) {
     console.error('Error creating contact:', error);
-    res.status(500).json({ error: 'Failed to create contact' });
+    res.status(500).json({ error: 'Could not create contact' });
   }
 });
 
-/**
- * PUT /contacts/:id
- * @summary Update a contact
- * @description Update an existing contact with any of the contact fields. At least one field must be provided
- * @param {string} id - Contact ID (URL parameter)
- * @body {Contact} required - Contact data to update (at least one field required)
- * @responses 204 - Contact updated successfully
- * @responses 400 - Invalid ID or no fields to update
- * @responses 404 - Contact not found
- * @responses 500 - Internal server error
- */
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -136,20 +99,10 @@ router.put('/:id', async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error updating contact:', error);
-    res.status(500).json({ error: 'Failed to update contact' });
+    res.status(500).json({ error: 'Could not update contact' });
   }
 });
 
-/**
- * DELETE /contacts/:id
- * @summary Delete a contact
- * @description Delete a specific contact from the database
- * @param {string} id - Contact ID (URL parameter)
- * @responses 204 - Contact deleted successfully
- * @responses 400 - Invalid ID
- * @responses 404 - Contact not found
- * @responses 500 - Internal server error
- */
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -168,7 +121,7 @@ router.delete('/:id', async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting contact:', error);
-    res.status(500).json({ error: 'Failed to delete contact' });
+    res.status(500).json({ error: 'Could not delete contact' });
   }
 });
 
