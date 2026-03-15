@@ -19,13 +19,32 @@ const createRegistration = async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    if (!ObjectId.isValid(eventId) || !ObjectId.isValid(memberId)) {
-      return res.status(400).json({ error: 'eventId and memberId must be valid ObjectId strings' });
+    if (!ObjectId.isValid(memberId)) {
+      return res.status(400).json({ error: 'memberId must be a valid ObjectId string' });
+    }
+
+    const eventsCollection = getDb().collection('events');
+    const membersCollection = getDb().collection('members');
+    const eventQuery = ObjectId.isValid(eventId)
+      ? { _id: new ObjectId(eventId) }
+      : { _id: eventId };
+
+    const [eventExists, memberExists] = await Promise.all([
+      eventsCollection.findOne(eventQuery),
+      membersCollection.findOne({ _id: new ObjectId(memberId) }),
+    ]);
+
+    if (!eventExists) {
+      return res.status(404).json({ error: 'Event not found for provided eventId' });
+    }
+
+    if (!memberExists) {
+      return res.status(404).json({ error: 'Member not found for provided memberId' });
     }
 
     const newRegistration = {
-      eventId: new ObjectId(eventId),
-      memberId: new ObjectId(memberId),
+      eventId,
+      memberId,
       status,
       notes: notes || '',
       createdAt: new Date(),
