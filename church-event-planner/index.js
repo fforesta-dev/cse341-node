@@ -7,8 +7,30 @@ const swaggerDocument = require('./swagger.json');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.set('trust proxy', 1);
 app.use(express.json());
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get('/swagger.json', (req, res) => {
+  const host = req.get('host');
+  const forwardedProto = req.get('x-forwarded-proto');
+  const protocol = forwardedProto || req.protocol;
+
+  res.json({
+    ...swaggerDocument,
+    host,
+    schemes: [protocol],
+  });
+});
+
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(null, {
+    swaggerOptions: {
+      url: '/swagger.json',
+    },
+  })
+);
 app.use('/', require('./routes'));
 
 initDb((err) => {
