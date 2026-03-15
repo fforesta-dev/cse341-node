@@ -1,0 +1,48 @@
+### EVENTS - Get all
+GET http://localhost:3000/events HTTP/1.1
+
+### EVENTS - Create
+POST http://localhost:3000/events HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Ward Temple Night",
+  "description": "Temple trip planning meeting and assignments",
+  "date": "2026-03-20",
+  "time": "19:00",
+  "location": "Stake Center Room 201",
+  "capacity": 60,
+  "organizerName": "Bishop Johnson",
+  "eventType": "Planning"
+}
+
+### MEMBERS - Get all
+GET http://localhost:3000/members HTTP/1.1
+
+### MEMBERS - Create
+POST http://localhost:3000/members HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Emily",
+  "lastName": "Clark",
+  "email": "emily.clark@email.com",
+  "phone": "801-555-1234",
+  "ward": "Provo 3rd Ward",
+  "calling": "Relief Society President",
+  "isActive": true
+}
+
+### REGISTRATIONS - Get all
+GET http://localhost:3000/registrations HTTP/1.1
+
+### REGISTRATIONS - Create
+POST http://localhost:3000/registrations HTTP/1.1
+Content-Type: application/json
+
+{
+  "eventId": "REPLACE_WITH_EVENT_ID",
+  "memberId": "REPLACE_WITH_MEMBER_ID",
+  "status": "Registered",
+  "notes": "Will bring refreshments."
+}
