@@ -31,7 +31,7 @@ const swaggerDoc = {
           500: {
             description: 'Server error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ServerError',
             },
           },
         },
@@ -59,13 +59,13 @@ const swaggerDoc = {
           400: {
             description: 'Validation error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ValidationError',
             },
           },
           500: {
             description: 'Server error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ServerError',
             },
           },
         },
@@ -88,7 +88,7 @@ const swaggerDoc = {
           500: {
             description: 'Server error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ServerError',
             },
           },
         },
@@ -116,13 +116,13 @@ const swaggerDoc = {
           400: {
             description: 'Validation error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ValidationError',
             },
           },
           500: {
             description: 'Server error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ServerError',
             },
           },
         },
@@ -145,7 +145,7 @@ const swaggerDoc = {
           500: {
             description: 'Server error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ServerError',
             },
           },
         },
@@ -173,13 +173,259 @@ const swaggerDoc = {
           400: {
             description: 'Validation error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ValidationError',
             },
           },
           500: {
             description: 'Server error',
             schema: {
-              $ref: '#/definitions/ErrorResponse',
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+    },
+    '/events/{id}': {
+      put: {
+        summary: 'Update event',
+        description: 'Replaces an existing event by ID.',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            required: true,
+            type: 'string',
+            description: 'Event ID (ObjectId or string)',
+          },
+          {
+            name: 'body',
+            in: 'body',
+            required: true,
+            schema: {
+              $ref: '#/definitions/EventInput',
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: 'Event updated',
+            schema: {
+              $ref: '#/definitions/MessageResponse',
+            },
+          },
+          400: {
+            description: 'Validation error',
+            schema: {
+              $ref: '#/definitions/ValidationError',
+            },
+          },
+          404: {
+            description: 'Event not found',
+            schema: {
+              $ref: '#/definitions/EventNotFoundError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+      delete: {
+        summary: 'Delete event',
+        description: 'Deletes an event by ID.',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            required: true,
+            type: 'string',
+            description: 'Event ID (ObjectId or string)',
+          },
+        ],
+        responses: {
+          200: {
+            description: 'Event deleted',
+            schema: {
+              $ref: '#/definitions/MessageResponse',
+            },
+          },
+          404: {
+            description: 'Event not found',
+            schema: {
+              $ref: '#/definitions/EventNotFoundError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+    },
+    '/members/{id}': {
+      put: {
+        summary: 'Update member',
+        description: 'Replaces an existing member by ID.',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            required: true,
+            type: 'string',
+            description: 'Member ObjectId',
+          },
+          {
+            name: 'body',
+            in: 'body',
+            required: true,
+            schema: {
+              $ref: '#/definitions/MemberInput',
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: 'Member updated',
+            schema: {
+              $ref: '#/definitions/MessageResponse',
+            },
+          },
+          400: {
+            description: 'Validation error',
+            schema: {
+              $ref: '#/definitions/ValidationError',
+            },
+          },
+          404: {
+            description: 'Member not found',
+            schema: {
+              $ref: '#/definitions/MemberNotFoundError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+      delete: {
+        summary: 'Delete member',
+        description: 'Deletes a member by ID.',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            required: true,
+            type: 'string',
+            description: 'Member ObjectId',
+          },
+        ],
+        responses: {
+          200: {
+            description: 'Member deleted',
+            schema: {
+              $ref: '#/definitions/MessageResponse',
+            },
+          },
+          404: {
+            description: 'Member not found',
+            schema: {
+              $ref: '#/definitions/MemberNotFoundError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+    },
+    '/registrations/{id}': {
+      put: {
+        summary: 'Update registration',
+        description: 'Replaces an existing registration by ID.',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            required: true,
+            type: 'string',
+            description: 'Registration ObjectId',
+          },
+          {
+            name: 'body',
+            in: 'body',
+            required: true,
+            schema: {
+              $ref: '#/definitions/RegistrationInput',
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: 'Registration updated',
+            schema: {
+              $ref: '#/definitions/MessageResponse',
+            },
+          },
+          400: {
+            description: 'Validation error',
+            schema: {
+              $ref: '#/definitions/ValidationError',
+            },
+          },
+          404: {
+            description: 'Registration not found',
+            schema: {
+              $ref: '#/definitions/RegistrationNotFoundError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+      delete: {
+        summary: 'Delete registration',
+        description: 'Deletes a registration by ID.',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            required: true,
+            type: 'string',
+            description: 'Registration ObjectId',
+          },
+        ],
+        responses: {
+          200: {
+            description: 'Registration deleted',
+            schema: {
+              $ref: '#/definitions/MessageResponse',
+            },
+          },
+          404: {
+            description: 'Registration not found',
+            schema: {
+              $ref: '#/definitions/RegistrationNotFoundError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
             },
           },
         },
@@ -245,10 +491,40 @@ const swaggerDoc = {
         id: { type: 'string', example: '65efab1234567890abcdef14' },
       },
     },
-    ErrorResponse: {
+    ValidationError: {
       type: 'object',
       properties: {
         error: { type: 'string', example: 'Missing required fields' },
+      },
+    },
+    EventNotFoundError: {
+      type: 'object',
+      properties: {
+        error: { type: 'string', example: 'Event not found' },
+      },
+    },
+    MemberNotFoundError: {
+      type: 'object',
+      properties: {
+        error: { type: 'string', example: 'Member not found' },
+      },
+    },
+    RegistrationNotFoundError: {
+      type: 'object',
+      properties: {
+        error: { type: 'string', example: 'Registration not found' },
+      },
+    },
+    ServerError: {
+      type: 'object',
+      properties: {
+        error: { type: 'string', example: 'Internal server error' },
+      },
+    },
+    MessageResponse: {
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: 'Event updated' },
       },
     },
   },
