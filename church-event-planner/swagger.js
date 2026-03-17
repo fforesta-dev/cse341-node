@@ -71,120 +71,6 @@ const swaggerDoc = {
         },
       },
     },
-    '/members/': {
-      get: {
-        summary: 'Get all members',
-        description: 'Returns all member documents from the members collection.',
-        responses: {
-          200: {
-            description: 'Members retrieved',
-            schema: {
-              type: 'array',
-              items: {
-                $ref: '#/definitions/MemberInput',
-              },
-            },
-          },
-          500: {
-            description: 'Server error',
-            schema: {
-              $ref: '#/definitions/ServerError',
-            },
-          },
-        },
-      },
-      post: {
-        summary: 'Create member',
-        description: 'Creates a new member in the members collection.',
-        parameters: [
-          {
-            name: 'body',
-            in: 'body',
-            required: true,
-            schema: {
-              $ref: '#/definitions/MemberInput',
-            },
-          },
-        ],
-        responses: {
-          201: {
-            description: 'Member created',
-            schema: {
-              $ref: '#/definitions/MemberCreated',
-            },
-          },
-          400: {
-            description: 'Validation error',
-            schema: {
-              $ref: '#/definitions/ValidationError',
-            },
-          },
-          500: {
-            description: 'Server error',
-            schema: {
-              $ref: '#/definitions/ServerError',
-            },
-          },
-        },
-      },
-    },
-    '/registrations/': {
-      get: {
-        summary: 'Get all registrations',
-        description: 'Returns all registration documents from the registrations collection.',
-        responses: {
-          200: {
-            description: 'Registrations retrieved',
-            schema: {
-              type: 'array',
-              items: {
-                $ref: '#/definitions/RegistrationInput',
-              },
-            },
-          },
-          500: {
-            description: 'Server error',
-            schema: {
-              $ref: '#/definitions/ServerError',
-            },
-          },
-        },
-      },
-      post: {
-        summary: 'Create registration',
-        description: 'Creates a new registration in the registrations collection.',
-        parameters: [
-          {
-            name: 'body',
-            in: 'body',
-            required: true,
-            schema: {
-              $ref: '#/definitions/RegistrationInput',
-            },
-          },
-        ],
-        responses: {
-          201: {
-            description: 'Registration created',
-            schema: {
-              $ref: '#/definitions/RegistrationCreated',
-            },
-          },
-          400: {
-            description: 'Validation error',
-            schema: {
-              $ref: '#/definitions/ValidationError',
-            },
-          },
-          500: {
-            description: 'Server error',
-            schema: {
-              $ref: '#/definitions/ServerError',
-            },
-          },
-        },
-      },
-    },
     '/events/{id}': {
       put: {
         summary: 'Update event',
@@ -267,6 +153,63 @@ const swaggerDoc = {
         },
       },
     },
+    '/members/': {
+      get: {
+        summary: 'Get all members',
+        description: 'Returns all member documents from the members collection.',
+        responses: {
+          200: {
+            description: 'Members retrieved',
+            schema: {
+              type: 'array',
+              items: {
+                $ref: '#/definitions/MemberInput',
+              },
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+      post: {
+        summary: 'Create member',
+        description: 'Creates a new member in the members collection.',
+        parameters: [
+          {
+            name: 'body',
+            in: 'body',
+            required: true,
+            schema: {
+              $ref: '#/definitions/MemberInput',
+            },
+          },
+        ],
+        responses: {
+          201: {
+            description: 'Member created',
+            schema: {
+              $ref: '#/definitions/MemberCreated',
+            },
+          },
+          400: {
+            description: 'Validation error',
+            schema: {
+              $ref: '#/definitions/ValidationError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+    },
     '/members/{id}': {
       put: {
         summary: 'Update member',
@@ -338,6 +281,63 @@ const swaggerDoc = {
             description: 'Member not found',
             schema: {
               $ref: '#/definitions/MemberNotFoundError',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+    },
+    '/registrations/': {
+      get: {
+        summary: 'Get all registrations',
+        description: 'Returns all registration documents from the registrations collection.',
+        responses: {
+          200: {
+            description: 'Registrations retrieved',
+            schema: {
+              type: 'array',
+              items: {
+                $ref: '#/definitions/RegistrationInput',
+              },
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+      post: {
+        summary: 'Create registration',
+        description: 'Creates a new registration in the registrations collection.',
+        parameters: [
+          {
+            name: 'body',
+            in: 'body',
+            required: true,
+            schema: {
+              $ref: '#/definitions/RegistrationInput',
+            },
+          },
+        ],
+        responses: {
+          201: {
+            description: 'Registration created',
+            schema: {
+              $ref: '#/definitions/RegistrationCreated',
+            },
+          },
+          400: {
+            description: 'Validation error',
+            schema: {
+              $ref: '#/definitions/ValidationError',
             },
           },
           500: {
