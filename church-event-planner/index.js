@@ -34,9 +34,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/swagger.json', (req, res) => {
-  const host = req.get('host');
-  const forwardedProto = req.get('x-forwarded-proto');
-  const protocol = forwardedProto || req.protocol;
+  const rawHost = req.get('host') || swaggerDocument.host;
+  const host = rawHost.replace(/^https?:\/\//i, '').trim();
+
+  const rawForwardedProto = req.get('x-forwarded-proto') || req.protocol || 'http';
+  const firstProto = rawForwardedProto.split(',')[0].trim().toLowerCase();
+  const protocol = firstProto === 'https' ? 'https' : 'http';
 
   res.json({
     ...swaggerDocument,
