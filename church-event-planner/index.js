@@ -3,12 +3,29 @@ require('dotenv').config();
 const { initDb } = require('./db/connect');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const session = require('express-session');
+const passport = require('./config/passport');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.set('trust proxy', 1);
 app.use(express.json());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/swagger.json', (req, res) => {
   const host = req.get('host');
@@ -31,6 +48,7 @@ app.use(
     },
   })
 );
+app.use('/auth', require('./routes/auth'));
 app.use('/', require('./routes'));
 
 initDb((err) => {

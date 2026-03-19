@@ -5,7 +5,8 @@ const swaggerDoc = {
   swagger: '2.0',
   info: {
     title: 'Church Event Planner API',
-    description: 'Simple REST API for managing church events, members, and registrations.',
+    description:
+      'Simple REST API for managing church events, members, and registrations with GitHub OAuth login.',
     version: '1.0.0',
   },
   host: 'localhost:3000',
@@ -13,7 +14,133 @@ const swaggerDoc = {
   schemes: ['http'],
   consumes: ['application/json'],
   produces: ['application/json'],
+  securityDefinitions: {
+    SessionAuth: {
+      type: 'apiKey',
+      in: 'cookie',
+      name: 'connect.sid',
+      description: 'Session cookie created after successful GitHub OAuth login.',
+    },
+  },
   paths: {
+    '/auth/status': {
+      get: {
+        summary: 'Check login status',
+        description: 'Returns current authentication status and user profile if logged in.',
+        responses: {
+          200: {
+            description: 'Status returned',
+            schema: {
+              $ref: '#/definitions/AuthStatus',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+    },
+    '/auth/github': {
+      get: {
+        summary: 'Start GitHub OAuth login',
+        description: 'Redirects to GitHub login and consent screen.',
+        responses: {
+          302: {
+            description: 'Redirect to GitHub',
+          },
+        },
+      },
+    },
+    '/auth/github/callback': {
+      get: {
+        summary: 'GitHub OAuth callback',
+        description: 'GitHub redirects here after login. On success, session is created.',
+        responses: {
+          302: {
+            description: 'Redirect to /auth/success or /auth/failed',
+          },
+        },
+      },
+    },
+    '/auth/success': {
+      get: {
+        summary: 'OAuth success result',
+        description: 'Returns logged in user data after successful OAuth callback.',
+        responses: {
+          200: {
+            description: 'Login successful',
+            schema: {
+              $ref: '#/definitions/AuthSuccess',
+            },
+          },
+          401: {
+            description: 'Not logged in',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
+        },
+      },
+    },
+    '/auth/failed': {
+      get: {
+        summary: 'OAuth failure result',
+        description: 'Shown when GitHub login fails.',
+        responses: {
+          401: {
+            description: 'Authentication failed',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
+        },
+      },
+    },
+    '/auth/private': {
+      get: {
+        summary: 'Protected test endpoint',
+        description: 'Only available for logged in users.',
+        security: [{ SessionAuth: [] }],
+        responses: {
+          200: {
+            description: 'Protected data returned',
+            schema: {
+              $ref: '#/definitions/AuthSuccess',
+            },
+          },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
+        },
+      },
+    },
+    '/auth/logout': {
+      get: {
+        summary: 'Log out current user',
+        description: 'Destroys current session and clears auth cookie.',
+        security: [{ SessionAuth: [] }],
+        responses: {
+          200: {
+            description: 'Logged out',
+            schema: {
+              $ref: '#/definitions/MessageResponse',
+            },
+          },
+          500: {
+            description: 'Server error',
+            schema: {
+              $ref: '#/definitions/ServerError',
+            },
+          },
+        },
+      },
+    },
     '/events/': {
       get: {
         summary: 'Get all events',
@@ -39,6 +166,7 @@ const swaggerDoc = {
       post: {
         summary: 'Create event',
         description: 'Creates a new event in the events collection.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'body',
@@ -62,6 +190,12 @@ const swaggerDoc = {
               $ref: '#/definitions/ValidationError',
             },
           },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
           500: {
             description: 'Server error',
             schema: {
@@ -75,6 +209,7 @@ const swaggerDoc = {
       put: {
         summary: 'Update event',
         description: 'Replaces an existing event by ID.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'id',
@@ -105,6 +240,12 @@ const swaggerDoc = {
               $ref: '#/definitions/ValidationError',
             },
           },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
           404: {
             description: 'Event not found',
             schema: {
@@ -122,6 +263,7 @@ const swaggerDoc = {
       delete: {
         summary: 'Delete event',
         description: 'Deletes an event by ID.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'id',
@@ -136,6 +278,12 @@ const swaggerDoc = {
             description: 'Event deleted',
             schema: {
               $ref: '#/definitions/MessageResponse',
+            },
+          },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
             },
           },
           404: {
@@ -178,6 +326,7 @@ const swaggerDoc = {
       post: {
         summary: 'Create member',
         description: 'Creates a new member in the members collection.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'body',
@@ -201,6 +350,12 @@ const swaggerDoc = {
               $ref: '#/definitions/ValidationError',
             },
           },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
           500: {
             description: 'Server error',
             schema: {
@@ -214,6 +369,7 @@ const swaggerDoc = {
       put: {
         summary: 'Update member',
         description: 'Replaces an existing member by ID.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'id',
@@ -244,6 +400,12 @@ const swaggerDoc = {
               $ref: '#/definitions/ValidationError',
             },
           },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
           404: {
             description: 'Member not found',
             schema: {
@@ -261,6 +423,7 @@ const swaggerDoc = {
       delete: {
         summary: 'Delete member',
         description: 'Deletes a member by ID.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'id',
@@ -275,6 +438,12 @@ const swaggerDoc = {
             description: 'Member deleted',
             schema: {
               $ref: '#/definitions/MessageResponse',
+            },
+          },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
             },
           },
           404: {
@@ -317,6 +486,7 @@ const swaggerDoc = {
       post: {
         summary: 'Create registration',
         description: 'Creates a new registration in the registrations collection.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'body',
@@ -340,6 +510,12 @@ const swaggerDoc = {
               $ref: '#/definitions/ValidationError',
             },
           },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
           500: {
             description: 'Server error',
             schema: {
@@ -353,6 +529,7 @@ const swaggerDoc = {
       put: {
         summary: 'Update registration',
         description: 'Replaces an existing registration by ID.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'id',
@@ -383,6 +560,12 @@ const swaggerDoc = {
               $ref: '#/definitions/ValidationError',
             },
           },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
+            },
+          },
           404: {
             description: 'Registration not found',
             schema: {
@@ -400,6 +583,7 @@ const swaggerDoc = {
       delete: {
         summary: 'Delete registration',
         description: 'Deletes a registration by ID.',
+        security: [{ SessionAuth: [] }],
         parameters: [
           {
             name: 'id',
@@ -414,6 +598,12 @@ const swaggerDoc = {
             description: 'Registration deleted',
             schema: {
               $ref: '#/definitions/MessageResponse',
+            },
+          },
+          401: {
+            description: 'Not authenticated',
+            schema: {
+              $ref: '#/definitions/UnauthorizedError',
             },
           },
           404: {
@@ -433,6 +623,29 @@ const swaggerDoc = {
     },
   },
   definitions: {
+    AuthUser: {
+      type: 'object',
+      properties: {
+        id: { type: 'string', example: '12345678' },
+        username: { type: 'string', example: 'francesco' },
+        displayName: { type: 'string', example: 'Francesco' },
+        provider: { type: 'string', example: 'github' },
+      },
+    },
+    AuthStatus: {
+      type: 'object',
+      properties: {
+        loggedIn: { type: 'boolean', example: true },
+        user: { $ref: '#/definitions/AuthUser' },
+      },
+    },
+    AuthSuccess: {
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: 'Login successful' },
+        user: { $ref: '#/definitions/AuthUser' },
+      },
+    },
     EventInput: {
       type: 'object',
       properties: {
@@ -495,6 +708,12 @@ const swaggerDoc = {
       type: 'object',
       properties: {
         error: { type: 'string', example: 'Missing required fields' },
+      },
+    },
+    UnauthorizedError: {
+      type: 'object',
+      properties: {
+        error: { type: 'string', example: 'You must be logged in to access this route' },
       },
     },
     EventNotFoundError: {
