@@ -4,7 +4,7 @@ const { initDb } = require('./db/connect');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo').default;
 const passport = require('./config/passport');
 
 const app = express();
