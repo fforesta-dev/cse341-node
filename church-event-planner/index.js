@@ -4,6 +4,7 @@ const { initDb } = require('./db/connect');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('./config/passport');
 
 const app = express();
@@ -14,6 +15,11 @@ app.use(express.json());
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      dbName: process.env.MONGODB_DB_NAME,
+      collectionName: 'sessions',
+    }),
     resave: false,
     saveUninitialized: false,
     cookie: {

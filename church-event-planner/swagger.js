@@ -17,9 +17,10 @@ const swaggerDoc = {
   securityDefinitions: {
     SessionAuth: {
       type: 'apiKey',
-      in: 'cookie',
-      name: 'connect.sid',
-      description: 'Session cookie created after successful GitHub OAuth login.',
+      in: 'header',
+      name: 'Cookie',
+      description:
+        'Session cookie header after successful GitHub OAuth login. Example: connect.sid=<session-value>',
     },
   },
   paths: {

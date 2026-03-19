@@ -7,21 +7,15 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "securityDefinitions": {
     "SessionAuth": {
       "type": "apiKey",
-      "in": "cookie",
-      "name": "connect.sid",
-      "description": "Session cookie created after successful GitHub OAuth login."
+      "in": "header",
+      "name": "Cookie",
+      "description": "Session cookie header after successful GitHub OAuth login. Example: connect.sid=<session-value>"
     }
   },
   "paths": {
