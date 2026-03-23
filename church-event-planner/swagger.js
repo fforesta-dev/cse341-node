@@ -6,7 +6,7 @@ const swaggerDoc = {
   info: {
     title: 'Church Event Planner API',
     description:
-      'Simple REST API for managing church events, members, and registrations with GitHub OAuth login.',
+      'Simple REST API for managing church events, members, and registrations with GitHub OAuth login. Note: /auth/github should be opened in a browser tab (redirect flow), not executed from Swagger fetch.',
     version: '1.0.0',
   },
   host: 'localhost:3000',
@@ -27,7 +27,7 @@ const swaggerDoc = {
     '/auth/status': {
       get: {
         summary: 'Check login status',
-        description: 'Returns current authentication status and user profile if logged in.',
+        description: 'Returns current session login status and user profile if authenticated.',
         responses: {
           200: {
             description: 'Status returned',
@@ -47,7 +47,8 @@ const swaggerDoc = {
     '/auth/github': {
       get: {
         summary: 'Start GitHub OAuth login',
-        description: 'Redirects to GitHub login and consent screen.',
+        description:
+          'Starts OAuth by redirecting to GitHub login/consent. Open this endpoint directly in the browser address bar, not Swagger Try it out.',
         responses: {
           302: {
             description: 'Redirect to GitHub',
@@ -58,7 +59,8 @@ const swaggerDoc = {
     '/auth/github/callback': {
       get: {
         summary: 'GitHub OAuth callback',
-        description: 'GitHub redirects here after login. On success, session is created.',
+        description:
+          'Internal callback used by GitHub after login. Do not call manually; GitHub calls this route and the server creates the session.',
         responses: {
           302: {
             description: 'Redirect to /auth/success or /auth/failed',
@@ -69,7 +71,8 @@ const swaggerDoc = {
     '/auth/success': {
       get: {
         summary: 'OAuth success result',
-        description: 'Returns logged in user data after successful OAuth callback.',
+        description:
+          'Shows login success result after callback and returns current authenticated user data.',
         responses: {
           200: {
             description: 'Login successful',
@@ -89,7 +92,7 @@ const swaggerDoc = {
     '/auth/failed': {
       get: {
         summary: 'OAuth failure result',
-        description: 'Shown when GitHub login fails.',
+        description: 'Shows failure result when GitHub OAuth does not complete successfully.',
         responses: {
           401: {
             description: 'Authentication failed',
@@ -103,7 +106,7 @@ const swaggerDoc = {
     '/auth/private': {
       get: {
         summary: 'Protected test endpoint',
-        description: 'Only available for logged in users.',
+        description: 'Protected sample endpoint that returns data only when logged in.',
         security: [{ SessionAuth: [] }],
         responses: {
           200: {
@@ -124,7 +127,8 @@ const swaggerDoc = {
     '/auth/logout': {
       get: {
         summary: 'Log out current user',
-        description: 'Destroys current session and clears auth cookie.',
+        description:
+          'Logs out current user by destroying server session and clearing session cookie.',
         security: [{ SessionAuth: [] }],
         responses: {
           200: {
